@@ -1,0 +1,107 @@
+<br>
+<h2>Recoleccion de datos</h2>
+
+
+<div class="card p-3">
+    <div class="card-body">
+      
+
+        <div class="row">
+
+            <form style="width: 100%;" [formGroup]="formularioDatos" (submit)="onSubmit()">
+        
+                <div class="row">
+        
+                    <!-- <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Datos</label>
+                        <input type="text" class="form-control" formControlName="inputDatos"
+                            placeholder="ingrese los datos separados por ,">
+                    </div> -->
+        
+                    <div class="form-group col-12">
+                        <label for="exampleFormControlTextarea1">Datos</label>
+                        <textarea class="form-control" rows="3" formControlName="inputDatos"
+                        placeholder="ingrese los datos separados por ,"></textarea>
+                      </div>
+
+                      <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Numero de datos (N)</label>
+                        <input type="text" class="form-control" formControlName="inputNumeroDatos" readonly>
+                    </div>
+        
+                      <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Maximo (Xmax)</label>
+                        <input type="text" class="form-control" formControlName="inputMaximo" readonly>
+                    </div>
+        
+        
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Minimo (Xmin)</label>
+                        <input type="text" class="form-control" formControlName="inputMinimo" readonly>
+                    </div>
+        
+                    
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Rango (R) = Xmax - Xmin</label>
+                        <input type="text" class="form-control" formControlName="inputRango" readonly>
+                    </div>
+
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Intervalos (K) = 1 + 3.322 * Log N</label>
+                        <input type="text" class="form-control" formControlName="inputIntervalos" readonly>
+                    </div>
+
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Amplitud (A)</label>
+                        <input type="text" class="form-control" formControlName="inputAmplitud" readonly>
+                    </div>
+
+
+                    <!-- <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label>Datos ordenados</label>
+                        <select class="form-control">
+                            <option *ngFor="let dato of datosOrdenados">{{dato}}</option>
+                        </select>
+                    </div> -->
+        
+        
+                </div>
+        
+                <div class="row">
+        
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                      
+                       <p>
+                        <button class="btn btn-primary active" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Mostrar Datos ordenados
+                          </button>
+                       </p>
+                      
+                      <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+        
+                            <ul class="list-group">
+                        <label>Datos ordenados</label>
+                        <li *ngFor="let dato of datosOrdenados">{{dato.current}}= {{dato.cnt}}</li>
+                      </ul>
+        
+                        </div>
+                      </div>
+                    </div>
+        
+                </div>
+        
+        
+                <button type="submit" class="btn btn-primary active">Procesar</button>
+            </form>
+        
+        
+        
+        
+        </div>
+        
+
+    </div>
+  </div>
+
+
