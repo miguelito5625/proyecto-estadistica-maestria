@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Estadistica } from 'src/app/clases/estadistica/estadistica';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { EstadisticaService } from 'src/app/servicios/estadistica/estadistica.service';
 
 
 
@@ -45,75 +46,67 @@ export class PaginaPrincipalComponent implements OnInit {
     inputMedia: new FormControl('')
   })
 
-  constructor(  ) { }
+  constructor( 
+    private servicioEstadistica: EstadisticaService
+   ) {
+
+      if (this.servicioEstadistica.datosFormulario && this.servicioEstadistica.datosTabla) {
+        this.formularioDatos.patchValue(this.servicioEstadistica.datosFormulario);
+        this.rows = this.servicioEstadistica.datosTabla;
+      }
+    
+    }
 
   ngOnInit(): void {
 
-   const datos = [1,1,2,2,3,3,4,4,5,5];
-   let cantidadDatos = 0;
 
-   const li = 1;
-   const ls = 3;
-
-   datos.forEach(element => {
-     if (element >= li && element < ls) {
-       cantidadDatos++;
-     }
-   });
-
-   console.log(cantidadDatos);
-   
+    this.formularioDatos.patchValue({
+      inputNumeroDatos:'hola'
+    });
     
 
   }
 
  async onSubmit(){
     let datosDesordenados = this.formularioDatos.value.inputDatos.split(',');
-    console.log(datosDesordenados);
-
     const numeroDatos = datosDesordenados.length;
-    this.formularioDatos.controls.inputNumeroDatos.setValue(numeroDatos);
-
     const xMax = Math.max(...datosDesordenados);
     const xMin = Math.min(...datosDesordenados);
-
-    this.formularioDatos.controls.inputMaximo.setValue(xMax);
-    this.formularioDatos.controls.inputMinimo.setValue(xMin);
-
     const rango:Number = Number(xMax) - Number(xMin);
-    this.formularioDatos.controls.inputRango.setValue(rango);
-
     this.datosOrdenados = this.estadistica.ordenamientoConteo(datosDesordenados);
-
     const intervalos = this.estadistica.intervalosReglaSturges(numeroDatos);
-    this.formularioDatos.controls.inputIntervalos.setValue(intervalos);
-
     const amplitud = Math.ceil(this.estadistica.calcularAmplitud(rango, intervalos));
-    this.formularioDatos.controls.inputAmplitud.setValue(amplitud);
-
     this.rows = this.estadistica.calcularTablaDeFrecuencias(datosDesordenados, xMin, intervalos, amplitud, numeroDatos);
     
     let sumatoriaxf = 0;
-    let sumatoriaFrecuentaAbsoluta = 0;
+    let sumatoriaFrecuenciaAbsoluta = 0;
+    let sumatoriaFrecuenciaRelativa = 0;
     this.rows.forEach(element => {
       sumatoriaxf = sumatoriaxf+element.xf;
-      sumatoriaFrecuentaAbsoluta = sumatoriaFrecuentaAbsoluta+element.f;
+      sumatoriaFrecuenciaAbsoluta = sumatoriaFrecuenciaAbsoluta+element.f;
+      sumatoriaFrecuenciaRelativa = sumatoriaFrecuenciaRelativa+element.fr;
     });
     this.rows.push({
-      f: `Σ = ${sumatoriaFrecuentaAbsoluta}`,
-      xf: `Σ = ${sumatoriaxf}`
+      f: `Σ = ${sumatoriaFrecuenciaAbsoluta}`,
+      xf: `Σ = ${sumatoriaxf}`,
+      fr: `Σ = ${sumatoriaFrecuenciaRelativa}`
     });
     
-    const media = Number(sumatoriaxf/numeroDatos);
-    this.formularioDatos.controls.inputMedia.setValue(media);
+    const mediaAritmetica = Number(sumatoriaxf/numeroDatos);
+    this.formularioDatos.controls.inputMedia.setValue(mediaAritmetica);
+
+    this.formularioDatos.patchValue({
+      inputNumeroDatos: numeroDatos,
+      inputMaximo: xMax,
+      inputMinimo: xMin,
+      inputRango: rango,
+      inputIntervalos: intervalos,
+      inputAmplitud: amplitud,
+      inputMedia: mediaAritmetica
+    });
     
-    // let suma = 0;
-    // this.rows.forEach(element => {
-    //   suma = Number(suma+element.fr);
-    // });
-    // console.log(suma);
-    
-    
+    this.servicioEstadistica.datosFormulario = this.formularioDatos.value;
+    this.servicioEstadistica.datosTabla = this.rows;
     
   }
 

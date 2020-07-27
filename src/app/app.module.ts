@@ -7,19 +7,24 @@ import { NavegacionComponent } from './componentes/navegacion/navegacion.compone
 import { PaginaPrincipalComponent } from './paginas/pagina-principal/pagina-principal.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { ChartsModule } from 'ng2-charts';
+import { PaginaHistogramaComponent } from './paginas/pagina-histograma/pagina-histograma.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavegacionComponent,
-    PaginaPrincipalComponent
+    PaginaPrincipalComponent,
+    PaginaHistogramaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
