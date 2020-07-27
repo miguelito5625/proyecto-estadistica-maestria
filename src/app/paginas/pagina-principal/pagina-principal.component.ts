@@ -33,14 +33,16 @@ export class PaginaPrincipalComponent implements OnInit {
   rangoObtenido:boolean = false;
 
   formularioDatos = new FormGroup({
-    inputDatos: new FormControl('25,65,66,65,66,65,9,69,89,9,96,13,56,4,88,52,6,54,58'),
+    inputDatos: new FormControl('22,19,16,13,18,15,20,14,15,16,15,16,20,13,15,18,15,13,18,15'),
+    // inputDatos: new FormControl('25,65,66,65,66,65,9,69,89,9,96,13,56,4,88,52,6,54,58'),
     // inputDatos: new FormControl(''),
     inputMinimo: new FormControl(''),
     inputMaximo: new FormControl(''),
     inputRango: new FormControl(''),
     inputNumeroDatos: new FormControl(''),
     inputIntervalos: new FormControl(''),
-    inputAmplitud: new FormControl('')
+    inputAmplitud: new FormControl(''),
+    inputMedia: new FormControl('')
   })
 
   constructor(  ) { }
@@ -86,12 +88,25 @@ export class PaginaPrincipalComponent implements OnInit {
     const intervalos = this.estadistica.intervalosReglaSturges(numeroDatos);
     this.formularioDatos.controls.inputIntervalos.setValue(intervalos);
 
-    const amplitud = this.estadistica.calcularAmplitud(rango, intervalos);
+    const amplitud = Math.ceil(this.estadistica.calcularAmplitud(rango, intervalos));
     this.formularioDatos.controls.inputAmplitud.setValue(amplitud);
 
     this.rows = this.estadistica.calcularTablaDeFrecuencias(datosDesordenados, xMin, intervalos, amplitud, numeroDatos);
-    console.log(this.rows);
-
+    
+    let sumatoriaxf = 0;
+    let sumatoriaFrecuentaAbsoluta = 0;
+    this.rows.forEach(element => {
+      sumatoriaxf = sumatoriaxf+element.xf;
+      sumatoriaFrecuentaAbsoluta = sumatoriaFrecuentaAbsoluta+element.f;
+    });
+    this.rows.push({
+      f: `Σ = ${sumatoriaFrecuentaAbsoluta}`,
+      xf: `Σ = ${sumatoriaxf}`
+    });
+    
+    const media = Number(sumatoriaxf/numeroDatos);
+    this.formularioDatos.controls.inputMedia.setValue(media);
+    
     // let suma = 0;
     // this.rows.forEach(element => {
     //   suma = Number(suma+element.fr);

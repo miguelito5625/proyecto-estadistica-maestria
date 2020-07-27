@@ -11,7 +11,7 @@ export class Estadistica {
     calcularTablaDeFrecuencias(arrayDatos, datoMenor, intervalos, amplitud, numeroDatos) {
         arrayDatos = this.ordenarArrayMenorAMayor(arrayDatos);
         let arrayObjetos: any = [];
-        amplitud = Math.round(amplitud);
+        amplitud = Math.ceil(amplitud);
 
         let limiteInferior;
         let limiteSuperior;
@@ -31,11 +31,16 @@ export class Estadistica {
                 limiteInferior = limiteSuperior;
                 limiteSuperior = Number(limiteInferior + amplitud);
             }
-
             
             arrayDatos.forEach((element) => {
-                if (element >= limiteInferior && element < limiteSuperior) {
-                    frecuenciaAbsoluta++;
+                if (index === Number(intervalos-1)) {
+                    if (element >= limiteInferior && element <= limiteSuperior) {
+                        frecuenciaAbsoluta++;
+                    }
+                } else {
+                    if (element >= limiteInferior && element < limiteSuperior) {
+                        frecuenciaAbsoluta++;
+                    }
                 }
                 
             });
@@ -49,13 +54,16 @@ export class Estadistica {
             marcaDeClase = Number((limiteInferior + limiteSuperior)/2);
             frecuenciaRelativa = Number((frecuenciaAbsoluta/numeroDatos).toFixed(3));
 
+            const xf = Number(marcaDeClase*frecuenciaAbsoluta);
+
             let objeto = {
                 li: limiteInferior,
                 ls: limiteSuperior,
                 x: marcaDeClase,
                 f: frecuenciaAbsoluta,
                 fr: frecuenciaRelativa,
-                F: frecuenciaAbsolutaAcumulada
+                F: frecuenciaAbsolutaAcumulada,
+                xf: xf
             }
 
             arrayObjetos.push(objeto);
