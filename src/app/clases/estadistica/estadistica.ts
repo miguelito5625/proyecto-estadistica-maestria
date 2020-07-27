@@ -8,17 +8,21 @@ export class Estadistica {
         return rango / intervalos;
     }
 
-    calcularTablaDeFrecuencias(arrayDatos, datoMenor, intervalos, amplitud) {
+    calcularTablaDeFrecuencias(arrayDatos, datoMenor, intervalos, amplitud, numeroDatos) {
         arrayDatos = this.ordenarArrayMenorAMayor(arrayDatos);
         let arrayObjetos: any = [];
         amplitud = Math.round(amplitud);
 
         let limiteInferior;
         let limiteSuperior;
-        let marcoDeClase;
+        let marcaDeClase;
+        let frecuenciaAbsoluta = 0;
+        let frecuenciaRelativa = 0;
+        let frecuenciaAbsolutaAcumulada = 0;
 
         for (let index = 0; index < intervalos; index++) {
-
+            frecuenciaAbsoluta = 0;
+            frecuenciaRelativa = 0;
 
             if (index === 0) {
                 limiteInferior = datoMenor;
@@ -28,16 +32,34 @@ export class Estadistica {
                 limiteSuperior = Number(limiteInferior + amplitud);
             }
 
+            
+            arrayDatos.forEach((element) => {
+                if (element >= limiteInferior && element < limiteSuperior) {
+                    frecuenciaAbsoluta++;
+                }
+                
+            });
+            
+            if (index === 0) {
+                frecuenciaAbsolutaAcumulada = frecuenciaAbsoluta;
+            }else{
+                frecuenciaAbsolutaAcumulada = Number(frecuenciaAbsolutaAcumulada + frecuenciaAbsoluta)
+            }
+
+            marcaDeClase = Number((limiteInferior + limiteSuperior)/2);
+            frecuenciaRelativa = Number((frecuenciaAbsoluta/numeroDatos).toFixed(3));
+
             let objeto = {
                 li: limiteInferior,
                 ls: limiteSuperior,
-                x: Number((limiteInferior + limiteSuperior)/2),
-                f: '',
-                fr: '',
-                F: ''
+                x: marcaDeClase,
+                f: frecuenciaAbsoluta,
+                fr: frecuenciaRelativa,
+                F: frecuenciaAbsolutaAcumulada
             }
 
             arrayObjetos.push(objeto);
+
 
         }
 

@@ -47,7 +47,20 @@ export class PaginaPrincipalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+   const datos = [1,1,2,2,3,3,4,4,5,5];
+   let cantidadDatos = 0;
+
+   const li = 1;
+   const ls = 3;
+
+   datos.forEach(element => {
+     if (element >= li && element < ls) {
+       cantidadDatos++;
+     }
+   });
+
+   console.log(cantidadDatos);
+   
     
 
   }
@@ -76,8 +89,15 @@ export class PaginaPrincipalComponent implements OnInit {
     const amplitud = this.estadistica.calcularAmplitud(rango, intervalos);
     this.formularioDatos.controls.inputAmplitud.setValue(amplitud);
 
-    this.rows = this.estadistica.calcularTablaDeFrecuencias(datosDesordenados, xMin, intervalos, amplitud);
+    this.rows = this.estadistica.calcularTablaDeFrecuencias(datosDesordenados, xMin, intervalos, amplitud, numeroDatos);
     console.log(this.rows);
+
+    // let suma = 0;
+    // this.rows.forEach(element => {
+    //   suma = Number(suma+element.fr);
+    // });
+    // console.log(suma);
+    
     
     
   }
