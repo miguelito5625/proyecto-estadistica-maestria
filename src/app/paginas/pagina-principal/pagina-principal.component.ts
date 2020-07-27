@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Estadistica } from 'src/app/clases/estadistica/estadistica';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+
+
 
 @Component({
   selector: 'app-pagina-principal',
@@ -8,6 +11,21 @@ import { Estadistica } from 'src/app/clases/estadistica/estadistica';
   styleUrls: ['./pagina-principal.component.css']
 })
 export class PaginaPrincipalComponent implements OnInit {
+
+  messages = {
+    emptyMessage: 'No hay datos para mostrar',
+    totalMessage: 'Total',
+    selectedMessage: 'Seleccionado'
+  };
+
+  rows = [];
+  temp = [...this.rows];
+
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
+  columns = [];
+
+  ColumnMode = ColumnMode;
 
   private estadistica = new Estadistica();
 
@@ -57,6 +75,10 @@ export class PaginaPrincipalComponent implements OnInit {
 
     const amplitud = this.estadistica.calcularAmplitud(rango, intervalos);
     this.formularioDatos.controls.inputAmplitud.setValue(amplitud);
+
+    this.rows = this.estadistica.calcularTablaDeFrecuencias(datosDesordenados, xMin, intervalos, amplitud);
+    console.log(this.rows);
+    
     
   }
 

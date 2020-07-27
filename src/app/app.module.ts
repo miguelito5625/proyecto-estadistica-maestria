@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { NavegacionComponent } from './componentes/navegacion/navegacion.component';
 import { PaginaPrincipalComponent } from './paginas/pagina-principal/pagina-principal.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { ReactiveFormsModule } from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

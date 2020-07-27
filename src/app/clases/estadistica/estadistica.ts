@@ -4,8 +4,45 @@ export class Estadistica {
 
     }
 
-    calcularAmplitud(rango, intervalos){
+    calcularAmplitud(rango, intervalos) {
         return rango / intervalos;
+    }
+
+    calcularTablaDeFrecuencias(arrayDatos, datoMenor, intervalos, amplitud) {
+        arrayDatos = this.ordenarArrayMenorAMayor(arrayDatos);
+        let arrayObjetos: any = [];
+        amplitud = Math.round(amplitud);
+
+        let limiteInferior;
+        let limiteSuperior;
+        let marcoDeClase;
+
+        for (let index = 0; index < intervalos; index++) {
+
+
+            if (index === 0) {
+                limiteInferior = datoMenor;
+                limiteSuperior = Number(limiteInferior + amplitud);
+            } else {
+                limiteInferior = limiteSuperior;
+                limiteSuperior = Number(limiteInferior + amplitud);
+            }
+
+            let objeto = {
+                li: limiteInferior,
+                ls: limiteSuperior,
+                x: Number((limiteInferior + limiteSuperior)/2),
+                f: '',
+                fr: '',
+                F: ''
+            }
+
+            arrayObjetos.push(objeto);
+
+        }
+
+        return arrayObjetos;
+
     }
 
     intervalosReglaSturges(numeroDatos) {
