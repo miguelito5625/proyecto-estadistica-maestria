@@ -5,7 +5,6 @@ import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { EstadisticaService } from 'src/app/servicios/estadistica/estadistica.service';
 
 
-
 @Component({
   selector: 'app-pagina-principal',
   templateUrl: './pagina-principal.component.html',
@@ -43,7 +42,8 @@ export class PaginaPrincipalComponent implements OnInit {
     inputNumeroDatos: new FormControl(''),
     inputIntervalos: new FormControl(''),
     inputAmplitud: new FormControl(''),
-    inputMedia: new FormControl('')
+    inputMedia: new FormControl(''),
+    inputMediana: new FormControl('')    
   })
 
   constructor( 
@@ -58,12 +58,6 @@ export class PaginaPrincipalComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
-
-    this.formularioDatos.patchValue({
-      inputNumeroDatos:'hola'
-    });
-    
 
   }
 
@@ -95,6 +89,8 @@ export class PaginaPrincipalComponent implements OnInit {
     const mediaAritmetica = Number(sumatoriaxf/numeroDatos);
     this.formularioDatos.controls.inputMedia.setValue(mediaAritmetica);
 
+    const mediana = this.estadistica.calcularMediana(numeroDatos, this.rows, amplitud);    
+
     this.formularioDatos.patchValue({
       inputNumeroDatos: numeroDatos,
       inputMaximo: xMax,
@@ -102,7 +98,8 @@ export class PaginaPrincipalComponent implements OnInit {
       inputRango: rango,
       inputIntervalos: intervalos,
       inputAmplitud: amplitud,
-      inputMedia: mediaAritmetica
+      inputMedia: mediaAritmetica,
+      inputMediana: mediana.toFixed(2)
     });
     
     this.servicioEstadistica.datosFormulario = this.formularioDatos.value;

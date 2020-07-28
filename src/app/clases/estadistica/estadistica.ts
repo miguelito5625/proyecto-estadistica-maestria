@@ -4,6 +4,56 @@ export class Estadistica {
 
     }
 
+    calcularMediana(numeroDatos, tablaFrecuencia, amplitud) {
+        let mediana = 0;
+        let posicion = 0;
+
+        let intervaloSeleccionado;
+        let intervaloAnterior;
+        let intervaloSiguiente;
+
+        if (numeroDatos % 2 === 0) {
+            posicion = Number(numeroDatos / 2);
+        } else {
+            posicion = Number((numeroDatos + 1) / 2);
+        }
+
+        // console.log('la posicion es:', posicion);
+        // console.log('el tamanio de la tabla es:', tablaFrecuencia.length);
+
+
+        for (let index = 0; index < tablaFrecuencia.length; index++) {
+
+            if (index === Number(tablaFrecuencia.length - 1)) {
+                break;
+            }
+
+            //Si el resultado de dividir el numero de datos entre 2 se encuentra en F la mediana sera el ls de ese intervalo
+            if (posicion === tablaFrecuencia[index].F) {
+                mediana = tablaFrecuencia[index].ls;
+                return mediana;
+            }
+
+            if (tablaFrecuencia[index].F > posicion) {
+                intervaloSeleccionado = tablaFrecuencia[index];
+                intervaloAnterior = tablaFrecuencia[index-1];
+                intervaloSiguiente = tablaFrecuencia[index+1];
+                break;
+            }
+            
+        }       
+
+        // console.log('intervalo seleccionado: ', intervaloSeleccionado);
+        // console.log('intervalo anterior: ', intervaloAnterior);
+        // console.log('intervalo siguiente: ', intervaloSiguiente);
+
+        mediana = Number(intervaloSeleccionado.li + (((posicion-intervaloAnterior.F)/intervaloSeleccionado.f)*(intervaloSeleccionado.ls - intervaloSeleccionado.li)));
+        
+                
+
+        return mediana;
+    }
+
     calcularAmplitud(rango, intervalos) {
         return rango / intervalos;
     }
@@ -31,9 +81,9 @@ export class Estadistica {
                 limiteInferior = limiteSuperior;
                 limiteSuperior = Number(limiteInferior + amplitud);
             }
-            
+
             arrayDatos.forEach((element) => {
-                if (index === Number(intervalos-1)) {
+                if (index === Number(intervalos - 1)) {
                     if (element >= limiteInferior && element <= limiteSuperior) {
                         frecuenciaAbsoluta++;
                     }
@@ -42,19 +92,19 @@ export class Estadistica {
                         frecuenciaAbsoluta++;
                     }
                 }
-                
+
             });
-            
+
             if (index === 0) {
                 frecuenciaAbsolutaAcumulada = frecuenciaAbsoluta;
-            }else{
+            } else {
                 frecuenciaAbsolutaAcumulada = Number(frecuenciaAbsolutaAcumulada + frecuenciaAbsoluta)
             }
 
-            marcaDeClase = Number((limiteInferior + limiteSuperior)/2);
-            frecuenciaRelativa = Number((frecuenciaAbsoluta/numeroDatos).toFixed(3));
+            marcaDeClase = Number((limiteInferior + limiteSuperior) / 2);
+            frecuenciaRelativa = Number((frecuenciaAbsoluta / numeroDatos).toFixed(3));
 
-            const xf = Number(marcaDeClase*frecuenciaAbsoluta);
+            const xf = Number(marcaDeClase * frecuenciaAbsoluta);
 
             let objeto = {
                 li: limiteInferior,

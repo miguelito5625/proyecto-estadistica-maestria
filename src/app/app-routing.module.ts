@@ -6,12 +6,17 @@ import { PaginaHistogramaComponent } from './paginas/pagina-histograma/pagina-hi
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'recoleccion-datos',
     component: PaginaPrincipalComponent
   },
   {
     path:'histograma',
     component: PaginaHistogramaComponent
+  },
+  { 
+    path: '',   
+    redirectTo: '/recoleccion-datos', 
+    pathMatch: 'full' 
   }
 ];
 
