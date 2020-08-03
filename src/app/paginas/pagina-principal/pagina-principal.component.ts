@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Estadistica } from 'src/app/clases/estadistica/estadistica';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { EstadisticaService } from 'src/app/servicios/estadistica/estadistica.service';
 
+declare var Swal:any;
 
 @Component({
   selector: 'app-pagina-principal',
@@ -36,6 +37,7 @@ export class PaginaPrincipalComponent implements OnInit {
     inputDatos: new FormControl('22,19,16,13,18,15,20,14,15,16,15,16,20,13,15,18,15,13,18,15'),
     // inputDatos: new FormControl('25,65,66,65,66,65,9,69,89,9,96,13,56,4,88,52,6,54,58'),
     // inputDatos: new FormControl(''),
+    inputTipoDatos: new FormControl('', [Validators.required]),
     inputMinimo: new FormControl(''),
     inputMaximo: new FormControl(''),
     inputRango: new FormControl(''),
@@ -44,7 +46,9 @@ export class PaginaPrincipalComponent implements OnInit {
     inputAmplitud: new FormControl(''),
     inputMedia: new FormControl(''),
     inputMediana: new FormControl('')    
-  })
+  });
+
+  tipoDatos = "";
 
   constructor( 
     private servicioEstadistica: EstadisticaService
@@ -61,7 +65,23 @@ export class PaginaPrincipalComponent implements OnInit {
 
   }
 
+  cambioValorTipoDato(){
+    const nombreDato = this.formularioDatos.controls.inputTipoDatos.value;
+    this.tipoDatos = nombreDato.charAt(0).toUpperCase() + nombreDato.slice(1);
+  }
+
  async onSubmit(){
+
+  if (!/[a-zA-Z]/.test(this.formularioDatos.controls.inputTipoDatos.value)) {
+     Swal.fire({
+      title: 'Atencion!',
+      text: 'No escribio el tipo de dato a procesar',
+      icon: 'info',
+      confirmButtonText: 'Aceptar'
+    });
+    return;
+  }
+
     let datosDesordenados = this.formularioDatos.value.inputDatos.split(',');
     const numeroDatos = datosDesordenados.length;
     const xMax = Math.max(...datosDesordenados);

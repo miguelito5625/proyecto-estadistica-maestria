@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EstadisticaService } from 'src/app/servicios/estadistica/estadistica.service';
 import { element } from 'protractor';
+import { Router } from '@angular/router';
+
+declare var Swal:any;
 
 @Component({
   selector: 'app-pagina-histograma',
@@ -10,8 +13,15 @@ import { element } from 'protractor';
 export class PaginaHistogramaComponent implements OnInit {
 
   constructor(
-    private servicioEstadistica: EstadisticaService
+    private servicioEstadistica: EstadisticaService,
+    private router: Router
   ) {
+
+    if (!this.servicioEstadistica.datosTabla) {
+      this.router.navigate(['/recoleccion-datos']);
+      return;
+    }
+
     if (this.servicioEstadistica.datosTabla) {
 
       this.servicioEstadistica.datosTabla.forEach((element, index) => {
@@ -32,13 +42,18 @@ export class PaginaHistogramaComponent implements OnInit {
 
       this.barChartData = [
         {
-          data: this.frecuenciasAbsolutas, backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)'
+          data: this.frecuenciasAbsolutas
         },
       ];
       this.barChartLabels = this.limitesTabla;
+      console.log(this.frecuenciasAbsolutas);
+      console.log(this.limitesTabla);
+
+
     }
   }
+
+  
 
   frecuenciasAbsolutas = [];
   limitesTabla = [];
@@ -47,7 +62,8 @@ export class PaginaHistogramaComponent implements OnInit {
     scales: {
       xAxes: [{
         display: false,
-        barPercentage: 1.3,
+        barPercentage: 1.0,
+        categoryPercentage: 1.0,
         ticks: {
           max: 3,
         }
@@ -60,23 +76,22 @@ export class PaginaHistogramaComponent implements OnInit {
       }],
       yAxes: [{
         ticks: {
-          beginAtZero: true
+          beginAtZero: false
         }
       }]
     },
     responsive: true
   };
 
+  // public barChartLabels = [13, 15, 17, 19, 21, 23];
   public barChartLabels = [];
   public barChartType = 'bar';
   public barChartLegend = false;
   public barChartData = [
     {
-      data: [], backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)'
-    },
-    // { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    // { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+      data: []
+      // data: [4, 9, 3, 3, 1]
+    }
   ];
 
   ngOnInit() {
