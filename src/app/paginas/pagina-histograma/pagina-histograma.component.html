@@ -2,7 +2,9 @@
 <div class="card p-3">
     <div class="card-body">
       
-        <h2>Histograma</h2>
+        <div id="idGrafica" style="background-color: white;">
+
+          <h2>Gráfica de {{tipoDeDatos}}</h2>
 
         <div>
             <div style="display: block">
@@ -16,7 +18,20 @@
             </div>
           </div>
 
+        </div>
+
+
+          <div class="row ml-2 mt-3">
+
+            <button type="button" class="btn btn-primary btn-lg active" (click)="guardarGrafica()">Guardar Gráfica</button>
+            <button type="button" class="btn btn-primary btn-lg active ml-2" (click)="generarDatos()">Generar datos aleatorios</button>
+
+            
+          </div>
+
+
 
     </div>
+
 </div>
         

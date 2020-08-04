@@ -37,7 +37,7 @@ export class PaginaPrincipalComponent implements OnInit {
     inputDatos: new FormControl('22,19,16,13,18,15,20,14,15,16,15,16,20,13,15,18,15,13,18,15'),
     // inputDatos: new FormControl('25,65,66,65,66,65,9,69,89,9,96,13,56,4,88,52,6,54,58'),
     // inputDatos: new FormControl(''),
-    inputTipoDatos: new FormControl('', [Validators.required]),
+    inputTipoDatos: new FormControl('Latencias', [Validators.required]),
     inputMinimo: new FormControl(''),
     inputMaximo: new FormControl(''),
     inputRango: new FormControl(''),
@@ -57,6 +57,8 @@ export class PaginaPrincipalComponent implements OnInit {
       if (this.servicioEstadistica.datosFormulario && this.servicioEstadistica.datosTabla) {
         this.formularioDatos.patchValue(this.servicioEstadistica.datosFormulario);
         this.rows = this.servicioEstadistica.datosTabla;
+        const nombreDato = this.servicioEstadistica.datosFormulario.inputTipoDatos;
+        this.tipoDatos = nombreDato.charAt(0).toUpperCase() + nombreDato.slice(1);
       }
     
     }
