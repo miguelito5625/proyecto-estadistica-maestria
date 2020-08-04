@@ -147,6 +147,7 @@ export class PaginaHistogramaComponent implements OnInit, OnDestroy {
   funcionIntervalo;
 
   async generarDatos() {
+    // clearInterval(this.funcionIntervalo); para cambiar intervalo y rango
     const intervalo =  Number(this.formularioDatosRandom.controls.inputIntervalo.value * 1000);
 
 
