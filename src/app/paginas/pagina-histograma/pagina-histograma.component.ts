@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EstadisticaService } from 'src/app/servicios/estadistica/estadistica.service';
 import { element } from 'protractor';
 import { Router } from '@angular/router';
@@ -8,18 +8,26 @@ import { Label } from 'ng2-charts';
 
 import htmlToImage from 'html-to-image';
 import { saveAs } from 'file-saver';
+import { FormGroup, FormControl } from '@angular/forms';
+
 
 
 declare var Swal: any;
+declare var $: any;
 
 @Component({
   selector: 'app-pagina-histograma',
   templateUrl: './pagina-histograma.component.html',
   styleUrls: ['./pagina-histograma.component.css']
 })
-export class PaginaHistogramaComponent implements OnInit {
+export class PaginaHistogramaComponent implements OnInit, OnDestroy {
 
-  tipoDeDatos:string="";
+  tipoDeDatos: string = "";
+
+  formularioDatosRandom = new FormGroup({
+    inputIntervalo: new FormControl(''),
+    inputRangoDatos: new FormControl('')
+  });
 
 
   constructor(
@@ -79,13 +87,13 @@ export class PaginaHistogramaComponent implements OnInit {
 
   public barChartOptions = {
     responsive: true,
-    scales: { 
-      xAxes: [{}], 
+    scales: {
+      xAxes: [{}],
       yAxes: [{
         ticks: {
-            beginAtZero: true
+          beginAtZero: true
         }
-    }] 
+      }]
     }
   };
 
@@ -111,7 +119,11 @@ export class PaginaHistogramaComponent implements OnInit {
 
   }
 
-  guardarGrafica(){
+  ngOnDestroy() {
+    clearInterval(this.funcionIntervalo);
+  }
+
+  guardarGrafica() {
 
     Swal.fire({
       title: 'Procesando',
@@ -132,10 +144,57 @@ export class PaginaHistogramaComponent implements OnInit {
 
   }
 
-  async generarDatos(){
-    console.log('hola');
+  funcionIntervalo;
+
+  async generarDatos() {
+    const intervalo =  Number(this.formularioDatosRandom.controls.inputIntervalo.value * 1000);
+
+
+    $('#modalDatosRandom').modal('hide');
+    this.funcionIntervalo = setInterval(() => {
+      this.datosAleatorios();
+    }, 
+      intervalo);
     
 
+  }
+
+  datosAleatorios() {
+
+    const tamanioArray = this.frecuenciasAbsolutas.length;
+    let nuevoArray = [];
+    const rango = Number(this.formularioDatosRandom.controls.inputRangoDatos.value);
+
+    for (let index = 0; index < this.frecuenciasAbsolutas.length; index++) {
+      const element = this.frecuenciasAbsolutas[index];
+      const min = Number(element - rango);
+      const max = Number(element + rango);
+      const nuevoDato = this.getRndInteger(min, max);
+      nuevoArray.push(nuevoDato);
+    }
+
+    console.log(nuevoArray);
+    
+
+    // this.frecuenciasAbsolutas = nuevoArray;
+
+    this.barChartData = [
+      {
+        data: nuevoArray,
+        label: 'Histograma',
+        barPercentage: 1.25
+      },
+      {
+        data: nuevoArray,
+        label: 'Polígono de frecuencias',
+        type: 'line'
+      }
+    ];
+
+  }
+
+  getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
 }
