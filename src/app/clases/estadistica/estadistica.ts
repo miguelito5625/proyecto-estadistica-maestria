@@ -4,6 +4,52 @@ export class Estadistica {
 
     }
 
+    // Proyecciones
+
+    generarTablaProyecciones(periodos, valorMinimo, valorMaximo) {
+
+        let arrayObjetos = [];
+        let x = 0;
+        let y = 0;
+        let xCuadrada = 0;
+        let yCuadrada = 0;
+        let xy = 0;
+
+        for (let index = 0; index < periodos; index++) {
+
+
+            x = index + 1;
+            y = this.numeroAleatorio(valorMinimo, valorMaximo);
+            // y = Number(y + this.numeroAleatorio(valorMinimo, valorMaximo));
+            xCuadrada = Math.pow(x, 2);
+            yCuadrada = Math.pow(y, 2);
+            xy = Number(x*y);
+
+            const objeto = {
+                x: x,
+                y: y,
+                xCuadrada: xCuadrada,
+                yCuadrada: yCuadrada,
+                xy: xy
+            }
+
+            arrayObjetos.push(objeto);
+        }
+
+        return arrayObjetos;
+
+
+    }
+
+
+    numeroAleatorio(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+    // Termina Proyecciones
+
+
     calcularMediana(numeroDatos, tablaFrecuencia, amplitud) {
         let mediana = 0;
         let posicion = 0;
@@ -36,20 +82,20 @@ export class Estadistica {
 
             if (tablaFrecuencia[index].F > posicion) {
                 intervaloSeleccionado = tablaFrecuencia[index];
-                intervaloAnterior = tablaFrecuencia[index-1];
-                intervaloSiguiente = tablaFrecuencia[index+1];
+                intervaloAnterior = tablaFrecuencia[index - 1];
+                intervaloSiguiente = tablaFrecuencia[index + 1];
                 break;
             }
-            
-        }       
+
+        }
 
         // console.log('intervalo seleccionado: ', intervaloSeleccionado);
         // console.log('intervalo anterior: ', intervaloAnterior);
         // console.log('intervalo siguiente: ', intervaloSiguiente);
 
-        mediana = Number(intervaloSeleccionado.li + (((posicion-intervaloAnterior.F)/intervaloSeleccionado.f)*(intervaloSeleccionado.ls - intervaloSeleccionado.li)));
-        
-                
+        mediana = Number(intervaloSeleccionado.li + (((posicion - intervaloAnterior.F) / intervaloSeleccionado.f) * (intervaloSeleccionado.ls - intervaloSeleccionado.li)));
+
+
 
         return mediana;
     }
@@ -157,7 +203,6 @@ export class Estadistica {
         for (var i = 0; i < array_elements.length; i++) {
             if (array_elements[i] != current) {
                 if (cnt > 0) {
-                    // document.write(current + ' comes --> ' + cnt + ' times<br>');
                     arrayObjetos.push({
                         current,
                         cnt
@@ -170,14 +215,12 @@ export class Estadistica {
             }
         }
         if (cnt > 0) {
-            // document.write(current + ' comes --> ' + cnt + ' times');
             arrayObjetos.push({
                 current,
                 cnt
             });
         }
 
-        // console.log(arrayObjetos);
         return arrayObjetos;
 
     }

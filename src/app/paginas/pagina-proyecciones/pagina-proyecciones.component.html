@@ -1,0 +1,154 @@
+<br>
+<div class="card p-3">
+    <div class="card-body">
+
+        <h2>Proyecciones</h2>
+
+
+        <div class="row">
+            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                <button class="btn btn-primary active" type="button" (click)="generarTablaProyecciones()">
+                    Generar Datos
+                </button>
+            </div>
+            
+            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                <button class="btn btn-primary active" type="button" (click)="calcularProyeccion()">
+                    Calcular Proyección
+                </button>
+            </div>
+
+        </div>
+
+
+        <div class="row ml-2">
+
+            <h2> Calculo de proyecciones </h2>
+
+            <form style="width: 100%;" [formGroup]="formularioFormulas" (submit)="calcularProyeccion()">
+
+                <div class="row">
+
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Calculo de b = ((N*Σx*y - Σx*Σy) / (N*Σχ² - (Σχ)²)) </label>
+                        <input type="text" class="form-control" formControlName="inputResultadoB" readonly>
+                    </div>
+
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Calculo de a = ( (ΣY - b*Σx) / N )</label>
+                        <input type="text" class="form-control" formControlName="inputResultadoA" readonly>
+                    </div>
+
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-4">
+                        <label for="inputAddress">Calculo de Y = a+b*X</label>
+                        <input type="text" class="form-control" formControlName="inputResultadoY" readonly>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- comienza grafica -->
+
+        <h2>Grafica</h2>
+
+
+        <div class="row">
+
+            <div id="idGrafica" style="background-color: white; width: 90%; margin-left: auto; margin-right: auto;">
+          
+                    <canvas baseChart 
+                    [datasets]="barChartData" 
+                    [labels]="barChartLabels" 
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+                    </canvas>
+                 
+                    
+          
+              </div>
+          
+          
+
+        </div>
+
+        <!-- termina grafica -->
+
+        <!-- comienza el html de la tabla -->
+        <div class="row">
+
+                    
+                    
+            <div class="form-group col-12">
+
+                <h2>Tabla de periodos</h2>
+
+                <ngx-datatable class="material" [rows]="rows" [scrollbarH]="true" [messages]="messages" [columnMode]="ColumnMode.force"
+                [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="50">
+            
+            
+                <ngx-datatable-column name="columnax">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span>X</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+
+                        {{row.x}}
+
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="columnay">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span>Y</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.y}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="colunmax2">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span>χ²</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.xCuadrada}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="columnay2">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span>Y² </span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.yCuadrada}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="columnaxf">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <span>X*Y </span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.xy}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+               
+            
+            </ngx-datatable>
+
+            </div>
+
+        </div> 
+        <!-- termina el html de la tabla -->
+
+       
+
+
+    </div>
+
+</div>

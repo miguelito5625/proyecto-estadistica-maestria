@@ -71,7 +71,7 @@ export class PaginaPrincipalComponent implements OnInit {
 
   }
 
-  getRndInteger(min, max) {
+  numeroAleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -146,7 +146,7 @@ export class PaginaPrincipalComponent implements OnInit {
         Swal.getContent().textContent = nuevosDatos;
         this.formularioDatos.controls.inputDatos.setValue(nuevosDatos);
         
-        array[index] = this.getRndInteger(rangoMinimo, rangoMaximo);        
+        array[index] = this.numeroAleatorio(rangoMinimo, rangoMaximo);        
         await this.sleep(50);
 
       }
@@ -180,6 +180,7 @@ export class PaginaPrincipalComponent implements OnInit {
     }
 
     let datosDesordenados = this.formularioDatos.value.inputDatos.split(',');
+    
     const numeroDatos = datosDesordenados.length;
     const xMax = Math.max(...datosDesordenados);
     const xMin = Math.min(...datosDesordenados);

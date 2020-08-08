@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ChartsModule } from 'ng2-charts';
 import { PaginaHistogramaComponent } from './paginas/pagina-histograma/pagina-histograma.component';
+import { PaginaProyeccionesComponent } from './paginas/pagina-proyecciones/pagina-proyecciones.component';
 
 
 
@@ -17,7 +18,8 @@ import { PaginaHistogramaComponent } from './paginas/pagina-histograma/pagina-hi
     AppComponent,
     NavegacionComponent,
     PaginaPrincipalComponent,
-    PaginaHistogramaComponent
+    PaginaHistogramaComponent,
+    PaginaProyeccionesComponent
   ],
   imports: [
     BrowserModule,

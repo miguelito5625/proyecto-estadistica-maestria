@@ -1,48 +1,45 @@
 <br>
 <div class="card p-3">
-    <div class="card-body">
-      
-        <div id="idGrafica" style="background-color: white;">
+  <div class="card-body">
 
-          <h2>Gráfica de {{tipoDeDatos}}</h2>
+    <div id="idGrafica" style="background-color: white;">
 
-        <div>
-            <div style="display: block;">
-              <canvas baseChart
-                      [datasets]="barChartData"
-                      [labels]="barChartLabels"
-                      [options]="barChartOptions"
-                      [legend]="barChartLegend"
-                      [chartType]="barChartType">
-              </canvas>
-            </div>
-          </div>
+      <h2>Gráfica de {{tipoDeDatos}}</h2>
 
+      <div>
+        <div style="display: block;">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType">
+          </canvas>
         </div>
-
-
-          <div class="row ml-2 mt-3">
-
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-              <button type="button" class="btn btn-primary active" (click)="guardarGrafica()">Guardar Gráfica</button>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-              <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#modalDatosRandom">Generar datos aleatorios</button>
-            </div>
-            
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-              <button type="button" class="btn btn-primary active" (click)="detenerDatosRandom()">Detener</button>
-            </div>
-
-          </div>
-
-
+      </div>
 
     </div>
 
+
+    <div class="row ml-2 mt-3">
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <button type="button" class="btn btn-primary active" (click)="guardarGrafica()">Guardar Gráfica</button>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#modalDatosRandom">Generar
+          datos aleatorios</button>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <button type="button" class="btn btn-primary active" (click)="detenerDatosRandom()">Detener</button>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
 </div>
-        
+
 
 
 
@@ -51,7 +48,8 @@
 
 
 <!-- Empieza modal -->
-<div class="modal fade" id="modalDatosRandom" tabindex="-1" role="dialog" aria-labelledby="modalDatosRandomLabel" aria-hidden="true">
+<div class="modal fade" id="modalDatosRandom" tabindex="-1" role="dialog" aria-labelledby="modalDatosRandomLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -61,7 +59,7 @@
         </button>
       </div>
       <div class="modal-body">
-        
+
         <form [formGroup]="formularioDatosRandom">
           <div class="form-group">
             <label>Intervalo (segundos)</label>
@@ -72,9 +70,9 @@
             <label>Rango de datos generados</label>
             <input type="number" class="form-control" formControlName="inputRangoDatos">
           </div>
-          
+
         </form>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

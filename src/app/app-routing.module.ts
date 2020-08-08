@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PaginaPrincipalComponent } from './paginas/pagina-principal/pagina-principal.component';
 import { PaginaHistogramaComponent } from './paginas/pagina-histograma/pagina-histograma.component';
+import { PaginaProyeccionesComponent } from './paginas/pagina-proyecciones/pagina-proyecciones.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path:'histograma',
     component: PaginaHistogramaComponent
+  },
+  {
+    path:'proyecciones',
+    component: PaginaProyeccionesComponent
   },
   { 
     path: '',   
